@@ -1,0 +1,52 @@
+# RBHP 实验室管理服务后端 — 简历项目描述
+
+## 项目名称
+**RBHP 实验室管理服务后端**（RBHP Lab Management Service）
+
+---
+
+## 一句话描述（适合简历首行）
+基于 Spring Boot 的实验室设备监控与告警后端服务，通过 OPC UA 协议实时采集工业设备/传感器数据，实现多通道告警（电话/短信/邮件）与故障记录管理。
+
+---
+
+## 项目描述（简历正文，可直接复制）
+
+**项目简介：**  
+RBHP 实验室管理服务后端是一套面向实验室环境的设备监控与告警系统。系统通过 OPC UA 协议与工业设备/PLC 建立连接，实时订阅传感器节点数据；当传感器状态异常（如由 false 变为 true）时，根据配置的告警等级与通知类型，通过电话、短信、邮件等多渠道通知相关人员，并记录故障清单，便于运维与追溯。
+
+**技术栈：**  
+Java 8、Spring Boot 2.7、MyBatis-Plus、MySQL、Druid 连接池、Redis、Eclipse Milo OPC UA 客户端、华为云语音通知、阿里云语音通话、Apache HttpClient、Jackson/FastJSON。
+
+**核心职责与成果：**
+
+1. **OPC UA 设备接入与订阅**  
+   使用 Eclipse Milo 实现 OPC UA 客户端，基于证书与安全目录建立与设备端的安全连接；从数据库动态加载需监控的传感器节点（identifier），实现批量订阅与数据变更监听，并将实时数据回调到告警处理逻辑。
+
+2. **断线重连与稳定性**  
+   实现 OPC UA 订阅监听与定时健康检查（如每 10 秒），在检测到连接断开时自动重连（最多 10 次、间隔 5 秒），并在重连成功后恢复批量订阅，保证 7×24 设备监控可用性。
+
+3. **多通道告警与策略扩展**  
+   采用策略模式封装告警方式：电话（PhoneStrategy）、短信（MessageStrategy）、邮件（EmailStrategy）、仅保存（JustSaveStrategy）及组合策略（AllStrategy）；按告警等级与联系人配置选择策略，集成华为云语音、阿里云语音等第三方能力，支持异步执行（CompletableFuture、@Async），避免阻塞数据采集线程。
+
+4. **业务规则与数据持久化**  
+   实现“仅状态从 false→true 时触发告警”的规则，避免重复告警；根据房间状态过滤（如房间状态为“邮件通知”时不发告警）；将故障信息写入故障清单表（ProblemList），并更新设备/传感器当前值与历史记录；使用 MyBatis-Plus 与 MySQL 做持久化，Druid 管理连接池。
+
+5. **运维与可观测性**  
+   集成健康检查 Starter（health-check-spring-boot-starter），支持多环境配置（dev/prod），便于部署与运维巡检。
+
+**项目收获：**  
+熟悉工业协议 OPC UA 的订阅/重连机制，掌握多通道告警的策略模式设计与异步编排，具备从设备接入到告警触达的完整后端开发经验。
+
+---
+
+## 简短版（适合空间有限的简历）
+
+**RBHP 实验室管理服务后端**  
+基于 Spring Boot + OPC UA 的实验室设备监控与告警系统。使用 Eclipse Milo 连接工业设备并批量订阅传感器节点，实现断线重连与健康检查；采用策略模式实现电话/短信/邮件等多通道告警，对接华为云、阿里云语音；结合 MyBatis-Plus、MySQL、Redis 完成故障记录与设备状态持久化。技术栈：Java 8、Spring Boot、MyBatis-Plus、MySQL、Redis、OPC UA、华为云/阿里云 API。
+
+---
+
+## 关键词（便于 HR/面试检索）
+
+Java | Spring Boot | OPC UA | 工业物联网 | 设备监控 | 告警系统 | 策略模式 | MyBatis-Plus | MySQL | Redis | 华为云 | 阿里云 | 异步编程 | 断线重连
