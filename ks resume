@@ -1,1 +1,79 @@
+## 基本信息
 
+| 项目 | 内容 |
+|------|------|
+| 姓名 | 【您的姓名】 |
+| 手机 | 【手机号】 |
+| 邮箱 | 【邮箱】 |
+| 求职意向 | Java 后端开发工程师 |
+| 工作年限 | 【如：3年】 |
+
+---
+
+## 专业技能
+
+- **语言与框架**：Java 8、Spring Boot、Spring MVC、MyBatis-Plus、Spring AOP、Spring 事务
+- **数据库与缓存**：MySQL、Redis、Druid 连接池
+- **接口与文档**：RESTful API、Swagger 接口文档、参数校验（Validation）
+- **安全与认证**：JWT、Azure SSO 单点登录、LDAP
+- **工具与中间件**：Maven、Logback、Hutool、Guava、EasyExcel、OkHttp、Apache Tika
+- **其他**：定时任务（@Scheduling）、异步任务（@Async）、Freemarker 模板、PDF 处理（iText/PDFBox）、Jsoup 解析
+
+---
+
+## 项目经历
+
+### 知识管理系统后端 | Java 后端开发
+
+**项目时间**：【如：2022.06 - 至今】  
+**技术栈**：Spring Boot 2.6、MyBatis-Plus、MySQL、Redis、JWT/Azure SSO、Swagger、EasyExcel、Druid、Hutool
+
+**项目描述**  
+企业级知识管理与学习平台后端服务，支撑能力模型、课程学习、测评考试、知识库（Docupedia）、数据看板及 HR 简历管理等模块，与 LDAP/Azure 集成实现统一认证。
+
+**主要职责与成果**
+
+1. **核心业务接口开发**
+   - 负责 Dashboard 数据看板、部门/人员统计、Workable 人员率、Gap 统计及 Excel 导出等接口设计与实现。
+   - 开发课程（Course）模块：课程与能力组件关联、套餐管理、日历课程、完成度统计等 REST 接口。
+   - 参与测评（Assessment）与能力模型（Competence）相关接口开发，包括套餐生成、组件等级、矩阵配置等。
+
+2. **HR 简历模块**
+   - 基于 Microsoft Graph 与 RestTemplate 实现从 SharePoint 批量下载 PDF 简历至本地。
+   - 使用 Apache Tika + PDFBox 解析简历内容并落库，支持初始化全量导入与定时增量同步。
+   - 设计并实现 HR 简历相关定时任务（HRResumeTask），与业务 Service 解耦，保证数据一致性。
+
+3. **知识库与文档**
+   - 参与 Docupedia 知识库模块：命名空间、内容统计、评论、点赞、作者等接口及定时同步任务（DocupediaTask）。
+   - 对接文件上传、Excel 模板导入导出（EasyExcel），以及 PDF 解析与生成（iText/PDFBox）等能力。
+
+4. **系统能力建设**
+   - 参与全局异常处理（GlobalExceptionHandler）、统一响应封装（ResponseEntity/ResponseResult）。
+   - 配置 RestTemplate、RedisTemplate、MyBatis-Plus 分页、Druid 数据源、Swagger3、异步线程池等。
+   - 维护多类定时任务：课程分配（NewCourseAssignTask）、用户同步（UserSyncTask）、统计刷新（StatisticsTask）、看板 Gap（DashboardGapTask）等，保障数据与业务状态按时更新。
+
+5. **安全与集成**
+   - 集成 Azure SSO 与 JWT，配合 LDAP 完成用户认证与权限体系。
+   - 使用 Jasypt 对敏感配置加密，保障生产环境配置安全。
+
+**项目亮点**
+- 模块划分清晰（Controller-Service-DAO），配合 DTO/VO 与统一响应结构，便于前后端协作与维护。
+- 定时任务与异步任务结合，满足批量同步与报表统计需求，并控制对主流程的影响。
+- 与 Microsoft 生态（Graph API、SharePoint）集成，实现简历自动化采集与解析，提升 HR 数据录入效率。
+
+---
+
+## 教育背景
+
+| 时间 | 学校 | 专业 | 学历 |
+|------|------|------|------|
+| 【如：2016.09 - 2020.06】 | 【学校名称】 | 【如：计算机科学与技术】 | 【本科/硕士】 |
+
+---
+
+## 其他说明
+
+- 熟悉 Git 协作开发、接口文档编写与联调。
+- 可根据岗位要求补充：微服务（Spring Cloud）、消息队列（RabbitMQ/Kafka）、Docker 等经验。
+
+---
