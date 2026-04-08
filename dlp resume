@@ -1,0 +1,28 @@
+项目经历
+项目名称：企业 DLP（数据防泄漏）事件管理与分析后端（bcsc-digital-framework）
+项目周期：（例如：2024.05 – 至今）
+项目角色：（例如：后端开发 / 核心开发）
+技术栈：Java 8，Spring Boot 2.7，Spring Security，MyBatis-Plus，Elasticsearch（Java Client），MySQL / SQL Server，MinIO，OpenAPI（Knife4j），Maven 多模块（common / system / biz）
+
+项目简介
+面向企业内部终端与 DLP 违规事件，提供事件检索、多维统计、看板指标、审批流（Work On）等能力；海量事件与终端画像数据存储与检索以 Elasticsearch 为核心，关系型数据库承担配置、权限与流程等持久化。
+
+主要职责与成果（Elasticsearch 相关）
+
+检索与聚合分析
+使用官方 Elasticsearch Java API（ElasticsearchClient） 实现 DLP 事件在多维度下的检索与统计：基于 Bool 查询 组合时间范围、组织（GB）、地区、事件类型、权限过滤等条件；使用 Terms 聚合 统计分布；对 嵌套结构 riskType 使用 Nested + 多级 Terms 聚合；在需要按业务指标排序的场景下，使用 子聚合 Sum 并与 Terms 的 order 结合（例如按终端聚合事件量与证据文件大小等）；对部分字段使用 Painless 脚本 在聚合前做规范化（如文件扩展名处理），保证统计口径一致。
+
+性能与大数据量处理
+对仅需统计、不需命中文档明细的场景采用 size(0) 聚合查询，减少回传体积；使用 Cardinality 等聚合支持去重类指标（如活跃终端维度下的 distinct 统计）；实现 Scroll 流式遍历（分批拉取、scroll 超时管理、clearScroll 释放），用于大批量导出或离线处理，避免深分页带来的性能问题。
+
+索引、Mapping 与写入
+参与/实现索引侧能力：应用启动时对业务索引做存在性检查，不存在则按领域模型自动创建索引；通过反射识别 Date 类型字段并统一 date 格式；对事件类文档配置 riskType 的 nested mapping；按需调整 max_result_window 等索引设置以支撑业务分页上限。写入侧使用 Bulk 批量写入，并结合 refresh 策略（如批量后 wait_for 与索引 refresh）在写入吞吐与读一致性之间做平衡。
+
+集群接入与工程化
+配置 HTTPS 访问、Basic 认证，以及网关/代理场景下的自定义请求路径前缀；设置连接池、超时、SSL 等参数，保证在统一出口环境下的稳定连接。与 Spring 配置类集成 RestClient + ElasticsearchClient，与业务中的事件、终端、组织、关键词等多个 Manager 分层封装，便于维护与扩展。
+
+业务协作（可选，按你实际工作写）
+与 REST 接口（如 /dlp/event）及看板 对接，将 ES 查询结果封装为统一响应；与权限模型结合，在查询 DSL 中落地数据范围过滤；配合 CSV/Excel 导入与业务侧对账、导出需求。（若你未参与可整段删除）
+
+项目收获 / 价值表述（可选一行）
+熟悉企业级场景下 ES 在安全合规与日志类数据中的典型用法：复杂 DSL、聚合管道、索引生命周期与批量写入，并能在查询性能与产品体验之间做工程化取舍。
