@@ -1,0 +1,17 @@
+TEF 刀具全生命周期管理系统
+技术栈： Java 8 / Spring MVC 4.3 / Hibernate 4.3 / Apache Shiro / SQL Server / Redis / Activiti 5.22 / Quartz / Apache CXF / Druid / Swagger / Gradle / Docker
+
+项目描述：
+该系统是面向制造业工厂的刀具全生命周期管理平台，涵盖刀具从入库、使用、转库、测量到报废的全流程管理。系统采用双 WAR 包部署架构，分为 Portal 管理后台（面向管理人员）和 REST API 接口（面向 PDA 手持终端及外部系统）。后端采用 Gradle 多模块构建，分为 common（通用层）、core（核心实体与 DAO）、portalservice / restservice（业务层）、portal / rest（接入层）、quartz（定时任务）七个模块，层次清晰，职责分明。
+
+核心职责：
+
+刀具与刀具块管理： 基于 RFID 标签实现刀具块的全链路追踪，管理刀具型号、条码、分类、系列、等级等主数据信息，支持刀具操作历史记录和消耗统计分析。
+多类型库位与库存管理： 设计标准货架（带电子标签）、无块库位、加工工位、供应商库位等多种库位类型，实现入库、盘点、库存预警（最小/最大阈值）及四种转库模式（标准⇄无块互转）。
+生产排程与工艺管理： 实现机床排产计划、工序流程定义、标准工艺规程管理，支持固定库位与浮动库位两种排产策略，通过 Quartz 定时任务自动执行排产计划。
+测量报告体系： 构建模板化的刀具测量报告系统，支持测量数据校验、测量设备管理及测量主数据维护。
+工作流与通知： 集成 Activiti 工作流引擎，实现通知审批流程；结合库存预警定时任务，自动触发邮件通知。
+ERP 系统集成： 通过 Apache CXF 构建 SOAP WebService 客户端，与 ERP 系统（SAP ESL）进行数据交互。
+REST API 与安全： 为 PDA 手持终端提供 REST 接口，采用 appid/appsecret + SHA1 签名验证机制保障接口安全；管理后台使用 Shiro 实现用户认证与 RBAC 权限控制。
+数据导入导出： 基于 Apache POI + EasyPOI 实现刀具数据、盘点数据、领料单等 Excel 批量导入导出功能。
+部署与运维： 使用 Jenkins + Docker 实现 CI/CD 自动化构建部署，Log4j2 + SLF4J 统一日志管理，Druid 连接池监控数据库性能。
